@@ -40,8 +40,14 @@ public class CursedScript : MonoBehaviour {
 
     void Start()
     {
-        if (bomb.GetModuleNames().Contains("Hickory Dickory Dock") && availableCurses.Contains(3))
-            availableCurses.Remove(3);
+        if (availableCurses.Contains(3))
+        {
+            var modules = bomb.GetModuleNames();
+            var ignored = GetComponent<KMBossModule>().GetIgnoredModules("Cursed", new string[] { "Hickory Dickory Dock" });
+            if (ignored.Any(modules.Contains))
+                availableCurses.Remove(3);
+        }
+
         if (availableCurses.Count > 0)
         {
             chosenCurse = availableCurses.PickRandom();
